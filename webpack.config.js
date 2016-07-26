@@ -3,7 +3,7 @@ var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 var path = require('path');
 var env = require('yargs').argv.mode;
 
-var libraryName = 'Library';
+var libraryName = 'redux-events';
 
 var plugins = [], outputFile;
 
@@ -20,7 +20,6 @@ var config = {
   output: {
     path: __dirname + '/lib',
     filename: outputFile,
-    library: libraryName,
     libraryTarget: 'umd',
     umdNamedDefine: true
   },
@@ -33,7 +32,7 @@ var config = {
       },
       {
         test: /(\.jsx|\.js)$/,
-        loader: "eslint-loader",
+        loader: 'eslint-loader',
         exclude: /node_modules/
       }
     ]
@@ -43,6 +42,6 @@ var config = {
     extensions: ['', '.js']
   },
   plugins: plugins
-};
+}
 
 module.exports = config;
