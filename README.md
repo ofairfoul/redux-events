@@ -3,10 +3,10 @@
 Redux middleware to enable you to easily dispatch actions in response to other actions in a decoupled manner
 
 ## Usage
+Expects a Promise polyfill to be present
 ```bash
 npm install --save redux-events
 ```
-Expects a Promise polyfill
 ```js
 import events, { composeListeners } from 'redux-events';
 ```
@@ -19,12 +19,12 @@ const rootListener = composeListeners([listeners])
 // Optional utility class to compose listener functions from different modules
 
 let middleware = applyMiddleware(events(rootListener), thunk)
-const store = createStore(rootReducer, initialState, middleware)
-```
+// apply middleware before others such as redux-thunk or router
 
-```js
+const store = createStore(rootReducer, initialState, middleware)
+
 store.dispatch({type: ACTION})
-  .then(() => {}) // store.dispatch() Always Returns a promise now
+  .then(() => {}) // store.dispatch() Always Returns a promise now. The Promise will only be resolved once all other actions provided by the listener function have also resolved
 ```
 
 ### Example Module Listener function
@@ -32,9 +32,12 @@ store.dispatch({type: ACTION})
 import {ACTION_TYPE, NEXT_ACTION_TYPE} from './duckModule'
 
 const LISTENERS = [
+  // Simply return the next action to dispatch
   {
     [ACTION_TYPE]: ({id}) => ({type: NEXT_ACTION_TYPE, id})
   },
+  // Or return a redux-thunk to dispatch async requests
+  // Requires redux-thunk middleware
   {
     [ACTION_TYPE]: ({id}) => (dispatch, getState) => {
       return Promise.resolve(123)

@@ -28,13 +28,11 @@
     "url": "https://github.com/ofairfoul/redux-events.git"
   },
   "keywords": [
-    "webpack",
-    "es6",
-    "starter",
-    "library",
-    "universal",
-    "umd",
-    "commonjs"
+    "redux",
+    "middleware",
+    "redux-middleware",
+    "promise",
+    "flux"
   ],
   "author": "Ollie Fairfoul <ofairfoul@gmail.com> (https://github.com/ofairfoul)",
   "license": "MIT",
